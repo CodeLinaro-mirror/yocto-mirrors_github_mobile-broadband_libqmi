@@ -45,6 +45,7 @@ gboolean qfu_operation_update_download_run (const gchar        **images,
 gboolean qfu_operation_verify_run          (const gchar        **images);
 gboolean qfu_operation_reset_run           (QfuDeviceSelection  *device_selection,
                                             QmiDeviceOpenFlags   device_open_flags);
+gboolean qfu_operation_reset_download_run  (QfuDeviceSelection  *device_selection);
 
 G_END_DECLS
 

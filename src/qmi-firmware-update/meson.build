@@ -36,6 +36,7 @@ enum_headers = files(
 sources = files(
   'qfu-at-device.c',
   'qfu-device-selection.c',
+  'qfu-download-reseter.c',
   'qfu-dload-message.c',
   'qfu-helpers.c',
   'qfu-image.c',
@@ -44,6 +45,7 @@ sources = files(
   'qfu-log.c',
   'qfu-main.c',
   'qfu-operation-reset.c',
+  'qfu-operation-reset-download.c',
   'qfu-operation-update.c',
   'qfu-operation-verify.c',
   'qfu-qdl-device.c',

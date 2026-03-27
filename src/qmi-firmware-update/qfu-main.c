@@ -65,6 +65,7 @@ static gboolean   skip_validation_flag;
 
 /* Reset */
 static gboolean   action_reset_flag;
+static gboolean   action_reset_download_flag;
 
 /* Update (in download mode) */
 static gboolean   action_update_download_flag;
@@ -239,6 +240,10 @@ static GOptionEntry context_update_entries[] = {
 static GOptionEntry context_reset_entries[] = {
     { "reset", 'b', 0, G_OPTION_ARG_NONE, &action_reset_flag,
       "Reset device into download mode.",
+      NULL
+    },
+    { "reset-download", 'B', 0, G_OPTION_ARG_NONE, &action_reset_download_flag,
+      "Reset device from download mode into application mode.",
       NULL
     },
     { NULL, 0, 0, 0, NULL, NULL, NULL }
@@ -598,11 +603,11 @@ int main (int argc, char **argv)
     qfu_log_init (stdout_verbose_flag, stdout_silent_flag, verbose_log_str);
 
     /* Total actions */
-    n_actions = (action_verify_flag + action_update_download_flag + action_reset_flag);
+    n_actions = (action_verify_flag + action_update_download_flag + action_reset_flag + action_reset_download_flag);
     /* Actions that require images specified */
     n_actions_images_needed = (action_verify_flag + action_update_download_flag);
     /* Actions that require a device specified */
-    n_actions_device_needed = (action_update_download_flag + action_reset_flag);
+    n_actions_device_needed = (action_update_download_flag + action_reset_flag + action_reset_download_flag);
     /* Actions that allow using a cdc-wdm device */
     n_actions_cdc_wdm_needed = (action_reset_flag);
 
@@ -714,6 +719,12 @@ int main (int argc, char **argv)
     if (action_reset_flag) {
         g_assert (QFU_IS_DEVICE_SELECTION (device_selection));
         result = qfu_operation_reset_run (device_selection, device_open_flags);
+        goto out;
+    }
+
+    if (action_reset_download_flag) {
+        g_assert (QFU_IS_DEVICE_SELECTION (device_selection));
+        result = qfu_operation_reset_download_run (device_selection);
         goto out;
     }
 
